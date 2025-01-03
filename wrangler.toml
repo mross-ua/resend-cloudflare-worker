@@ -3,6 +3,7 @@ name = "resend-cloudflare-worker"
 main = "src/index.tsx"
 compatibility_date = "2025-01-02"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = false
 
 # Workers Logs
 # Docs: https://developers.cloudflare.com/workers/observability/logs/workers-logs/
