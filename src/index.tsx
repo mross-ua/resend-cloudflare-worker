@@ -1,8 +1,6 @@
 import type { Response, Request, ExecutionContext } from "@cloudflare/workers-types";
 import { Resend } from 'resend';
 
-import { EmailTemplate } from './emails/email-template';
-
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		if (request.method !== "POST") {
@@ -52,6 +50,7 @@ export default {
 			from: `${name} <${email}>`,
 			to: [env.RESEND_RECIPIENT],
 			subject,
+			text: message
 		};
 
 		console.log({
@@ -61,10 +60,7 @@ export default {
 
 		const resend = new Resend(env.RESEND_API_KEY);
 
-		const res = await resend.emails.send({
-			...req,
-			react: <EmailTemplate firstName={name} />,
-		});
+		const res = await resend.emails.send(req);
 
 		console.log({
 			stage: 'response',
